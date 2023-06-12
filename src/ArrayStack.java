@@ -1,8 +1,9 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class ArrayStack <E extends Cloneable> implements Stack <E>  {
     private final int maxCapacity;
-    private int topStack=-1;
+    private int topStack=0;
     private Cloneable[] data;
 
     @SuppressWarnings("negative capacity")
@@ -15,7 +16,7 @@ public class ArrayStack <E extends Cloneable> implements Stack <E>  {
     @Override
     @SuppressWarnings("no space")
     public void push(Cloneable element) throws StackOverflowException {
-        if (topStack == maxCapacity - 1)
+        if (topStack == maxCapacity)
             throw new StackOverflowException("There`s no space - Stack is full");
 
         data[topStack] = element;
@@ -31,6 +32,7 @@ public class ArrayStack <E extends Cloneable> implements Stack <E>  {
 
         topStack--;
         return (E) data[topStack];
+
     }
 
     @Override
@@ -47,16 +49,38 @@ public class ArrayStack <E extends Cloneable> implements Stack <E>  {
 
     @Override
     public boolean isEmpty() {
-        return topStack ==-1;
+        return topStack ==0;
     }
 
-    @Override
-    public Stack clone() {
-        return null;
+    public ArrayStack<E> clone() {
+        ArrayStack<E> copyStack = new ArrayStack<E>(this.maxCapacity); // allocating new stack in the same size
+        copyStack.data = data.clone(); // the values of copyStack.data are references for the values in data
+
+        for (int i = 0; i < data.length; i++) {
+            copyStack.data[i] = data[i]; // copy the values from data to copyStack.data
+        }
+        return copyStack; // return the cloned stack
     }
 
     @Override
     public Iterator iterator() {
-        return null;
+        return new ArrayStackIterator;
+    }
+
+    private class ArrayStackIterator implements Iterator<E> {
+
+        @Override
+        public boolean hasNext() {
+            return topStack != 0;
+        }
+
+        @Override
+        public E next() {
+            if (!hasNext())
+                throw new NoSuchElementException("There is no such element");
+            E element = (E) data[topStack];
+            topStack--;
+            return element;
+        }
     }
 }
