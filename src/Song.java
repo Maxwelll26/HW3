@@ -82,7 +82,7 @@ public class Song implements Cloneable{
             return copySong;
 
         } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
+            return null;
         }
     }
 
