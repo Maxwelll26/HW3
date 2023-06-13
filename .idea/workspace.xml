@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e3ef7aa-66f2-4b4c-9822-106e87f31c12" name="Changes" comment="all the exception classes were made - tried few functions in the arrayStack - need to check &#10;need to create clone and iretator functions">
+    <list default="true" id="8e3ef7aa-66f2-4b4c-9822-106e87f31c12" name="Changes" comment="New Project">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/ArrayStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ArrayStack.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,8 +23,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MarkdownSettingsMigration">
-    <option name="stateVersion" value="1" />
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="343a73a4-9933-4fb7-abc0-0e20905046c3" />
+        <option name="url" value="https://github.com/Maxwelll26/HW3.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProjectId" id="2R3OWLx1ulB4Vxtj9mzEbsbt7Qs" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -45,20 +54,6 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Main" />
-      <module name="HW3" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Main" />
-      </list>
-    </recent_temporary>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -68,15 +63,15 @@
       <option name="presentableId" value="Default" />
       <updated>1686475331188</updated>
       <workItem from="1686475332581" duration="53000" />
-      <workItem from="1686480375767" duration="4866000" />
-      <workItem from="1686561957394" duration="1900000" />
+      <workItem from="1686475425888" duration="440000" />
+      <workItem from="1686493640416" duration="10646000" />
     </task>
-    <task id="LOCAL-00001" summary="all the exception classes were made - tried few functions in the arrayStack - need to check &#10;need to create clone and iretator functions">
-      <created>1686485274059</created>
+    <task id="LOCAL-00001" summary="New Project">
+      <created>1686475837674</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1686485274059</updated>
+      <updated>1686475837674</updated>
     </task>
     <option name="localTasksCounter" value="2" />
     <servers />
@@ -96,7 +91,7 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="all the exception classes were made - tried few functions in the arrayStack - need to check &#10;need to create clone and iretator functions" />
-    <option name="LAST_COMMIT_MESSAGE" value="all the exception classes were made - tried few functions in the arrayStack - need to check &#10;need to create clone and iretator functions" />
+    <MESSAGE value="New Project" />
+    <option name="LAST_COMMIT_MESSAGE" value="New Project" />
   </component>
 </project>
