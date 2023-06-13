@@ -61,6 +61,11 @@ public class Song implements Cloneable{
         this.duration = duration;
     }
 
+    @Override
+    public String toString() {
+        return "(" + name + ", " + artist + ", " + genre + ", " + duration + ")";
+    }
+
     /**
      * Creates and returns a copy of this Song object with all his features. the name and artist are STR
      * and are immutable and also regarding genre from the enum - is those cases, so shallow coping is
