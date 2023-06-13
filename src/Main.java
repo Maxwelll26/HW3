@@ -36,13 +36,14 @@ class MyCloneable implements Cloneable {
 
 public class Main {
     public static void main(String[] args) {
-        testPartA();
-        //testPartB();
+        //testPartA();
+        testPartB();
     }
 
     /**
      * Tests for part A.
      */
+    /*
     private static void testPartA() {
         try {
             new ArrayStack<>(-25);
@@ -130,9 +131,12 @@ public class Main {
     }
 
 
+     */
+
     /**
      * Iterates over a given stack.
      */
+    /*
     private static void iterateStack(Stack<?> stack, String name) {
         System.out.println(name + " size: " + stack.size());
         System.out.println("Is empty? " + stack.isEmpty());
@@ -145,10 +149,12 @@ public class Main {
         System.out.println();
     }
 
+
+     */
     /**
      * Tests for part B.
      */
-    /*private static void testPartB() {
+    private static void testPartB() {
         Playlist playlist1 = new Playlist();
         for (Song s : playlist1) {
             System.out.println("You should not reach here!");
@@ -270,12 +276,13 @@ public class Main {
         checkScans(playlist3, artists, durations);
 
         System.out.println("\nTesting of part B is over!");
-    }*/
+    }
 
     /**
      * Checks numerous scans for a given playlist.
      */
-    /*private static void checkScans(Playlist playlist, String[] artists, int[] durations) {
+    /*
+    private static void checkScans(Playlist playlist, String[] artists, int[] durations) {
         System.out.println("Starts scanning...");
         for (Song song : playlist) {
             System.out.println(song);
@@ -305,5 +312,7 @@ public class Main {
         }
 
         System.out.println("Done all scanning.");
-    }*/
+    }
+
+     */
 }
