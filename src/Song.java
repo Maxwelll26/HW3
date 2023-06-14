@@ -100,5 +100,42 @@ public class Song implements Cloneable{
 
     }
 
+    /**
+     * overriding on equals. If the other object is null or the hashcode between the two objects are different
+     * or the other object is not instance of Song - the two objects are not equal so returns false.
+     * defining that otherSong from Song type is the other object.
+     * @param other who is the other object we are trying to say if this song is equals to.
+     * @return true or false. if the song name and the artist are the same, so we will get true. else - false.
+     */
+    @Override
+    public boolean equals(Object other) {
+        if (other==null)
+            return false;
+        if (!(this.hashCode() == other.hashCode() || other instanceof Song))
+            return false;
+
+        Song otherSong = (Song) other;
+        return this.name.equals(otherSong.name) && this.artist.equals(otherSong.artist);
+
+    }
+
+    /**
+     * calculating a hashcode for each song using the Haski value for each character in the song name and artist and
+     * the duration of the song.
+     * @return the int value of the Hashcode.
+     */
+    @Override
+    public int hashCode() {
+        int nameValue = 0;
+        int artistValue = 0;
+        int currentHashCode = 0;
+        for (int i=0; i<this.name.length(); i++) {
+            nameValue += name.charAt(i);
+            artistValue += artist.charAt(i);
+            currentHashCode += (nameValue * artistValue)*(duration/11);
+
+        }
+        return currentHashCode;
+    }
 
 }
