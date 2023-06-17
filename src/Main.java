@@ -281,7 +281,7 @@ public class Main {
     /**
      * Checks numerous scans for a given playlist.
      */
-    /*
+
     private static void checkScans(Playlist playlist, String[] artists, int[] durations) {
         System.out.println("Starts scanning...");
         for (Song song : playlist) {
@@ -314,5 +314,5 @@ public class Main {
         System.out.println("Done all scanning.");
     }
 
-     */
+
 }

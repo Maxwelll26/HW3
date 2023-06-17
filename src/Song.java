@@ -6,7 +6,7 @@ public class Song implements Cloneable{
     private final String name;
     private final String artist;
     private Genre genre;
-    private int duration = 0;
+    private int duration;
     private Object [] song;
 
     /**
@@ -61,9 +61,15 @@ public class Song implements Cloneable{
         this.duration = duration;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "(" + name + ", " + artist + ", " + genre + ", " + duration + ")";
+    }*/
+
+    @Override
+    public String toString() {
+        String durationString = String.format("%d:%02d", duration / 60, duration % 60);
+        return String.format("%s, %s, %s, %s", name, artist, genre, durationString);
     }
 
     /**
@@ -107,24 +113,24 @@ public class Song implements Cloneable{
      * @param other who is the other object we are trying to say if this song is equals to.
      * @return true or false. if the song name and the artist are the same, so we will get true. else - false.
      */
-    @Override
+    /*@Override
     public boolean equals(Object other) {
+        if (this == other)
+            return true;
         if (other==null)
             return false;
         if (!(this.hashCode() == other.hashCode() || other instanceof Song))
             return false;
-
         Song otherSong = (Song) other;
         return this.name.equals(otherSong.name) && this.artist.equals(otherSong.artist);
-
-    }
+    }*/
 
     /**
      * calculating a hashcode for each song using the Haski value for each character in the song name and artist and
      * the duration of the song.
      * @return the int value of the Hashcode.
      */
-    @Override
+    /*@Override
     public int hashCode() {
         int nameValue = 0;
         int artistValue = 0;
@@ -133,9 +139,25 @@ public class Song implements Cloneable{
             nameValue += name.charAt(i);
             artistValue += artist.charAt(i);
             currentHashCode += (nameValue * artistValue)*(duration/11);
-
         }
         return currentHashCode;
+    }*/
+
+    @Override
+    public boolean equals(Object other) {
+        if (this == other)
+            return true;
+        if (other == null || getClass() != other.getClass())
+            return false;
+        Song otherSong = (Song) other;
+        return name.equals(otherSong.name) && artist.equals(otherSong.artist);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + artist.hashCode();
+        return result;
     }
 
 }
