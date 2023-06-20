@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8e3ef7aa-66f2-4b4c-9822-106e87f31c12" name="Changes" comment="Part A is done.">
+    <list default="true" id="8e3ef7aa-66f2-4b4c-9822-106e87f31c12" name="Changes" comment="playlist - starting">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ArrayStack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ArrayStack.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Playlist.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Playlist.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Song.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Song.java" afterDir="false" />
     </list>
@@ -19,8 +19,6 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
-        <option value="Enum" />
-        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -40,6 +38,9 @@
       </UrlAndAccount>
     </option>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2R3OWLx1ulB4Vxtj9mzEbsbt7Qs" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -58,6 +59,20 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="HW3" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -68,9 +83,8 @@
       <updated>1686475331188</updated>
       <workItem from="1686475332581" duration="53000" />
       <workItem from="1686475425888" duration="440000" />
-      <workItem from="1686493640416" duration="11493000" />
-      <workItem from="1686923990725" duration="2177000" />
-      <workItem from="1686938703722" duration="13298000" />
+      <workItem from="1686493640416" duration="10646000" />
+      <workItem from="1687255942702" duration="10944000" />
     </task>
     <task id="LOCAL-00001" summary="New Project">
       <created>1686475837674</created>
@@ -79,14 +93,7 @@
       <option name="project" value="LOCAL" />
       <updated>1686475837674</updated>
     </task>
-    <task id="LOCAL-00002" summary="Part A is done.">
-      <created>1686658271089</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1686658271090</updated>
-    </task>
-    <option name="localTasksCounter" value="3" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,16 +112,29 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="New Project" />
-    <MESSAGE value="Part A is done." />
-    <option name="LAST_COMMIT_MESSAGE" value="Part A is done." />
+    <option name="LAST_COMMIT_MESSAGE" value="New Project" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>295</line>
+          <url>file://$PROJECT_DIR$/src/Song.java</url>
+          <line>83</line>
           <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Main.java</url>
+          <line>286</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/Playlist.java</url>
+          <line>72</line>
+          <properties class="Playlist" method="&lt;init&gt;">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="10" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
