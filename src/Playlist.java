@@ -1,87 +1,37 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
+/**
+ * Represents a playlist of songs.
+ * Implements Cloneable, Iterable, FilteredSongIterable, and OrderedSongIterable interfaces.
+ */
 public class Playlist implements Cloneable, Iterable<Song>, FilteredSongIterable, OrderedSongIterable {
     private ArrayList<Song> playlist;
-    private ArrayList<Song> filterPlaylist;
     private ScanningOrder scanningOrder;
-
-
-    /**
-     * Returns an iterator to use for iterating over the songs in the playlist.
-     * @return an iterator.
-     */
-    @Override
-    public Iterator<Song> iterator() {
-        return new PlaylistIterator();
-    }
+    private String filterArtist;
+    private Song.Genre filterGenre;
+    private int filterDuration;
 
     /**
-     * inner class, for an iterator for iterating over the songs in the playlist.
-     */
-    public class PlaylistIterator implements Iterator<Song> {
-        private int count;
-
-        //Constructs a new PlaylistIterator with an initial count of 0.
-
-        public PlaylistIterator() {
-            count = 0;
-        }
-
-        /**
-         * Checks if there are remaining songs to iterate over.
-         * @return true if there are remaining songs to iterate over, false otherwise
-         */
-        @Override
-        public boolean hasNext() {
-            if (filterPlaylist != null) {
-                if (count < filterPlaylist.size()) {
-                    return true;
-                } else {
-                    filterPlaylist = new ArrayList<>(playlist);
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        }
-
-
-        /**
-         * If there are remaining songs to iterate over, returns the next song in the iteration.
-         * Since count is incremented before returning the song, we need to use count - 1 as the
-         * index to retrieve the correct song.
-         * @return the next song in the iteration
-         * @throws NoSuchElementException if there are no more songs to iterate over
-         */
-        @Override
-        public Song next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException("No more songs in the playlist.");
-            }
-
-            count++;
-            return filterPlaylist.get(count-1);
-        }
-    }
-
-
-
-    /**
-     * Constructs an empty Playlist object.
+     * Constructs an empty playlist.
      */
     public Playlist() {
         playlist = new ArrayList<>();
-        filterPlaylist = (ArrayList<Song>) playlist.clone();
+        scanningOrder = ScanningOrder.ADDING;
+        filterArtist = null;
+        filterGenre = null;
+        filterDuration = Integer.MAX_VALUE;
     }
-
 
     /**
      * Adds a song to the playlist.
-     * @param song the song to be added
-     * @throws SongAlreadyExistsException if the song is already in the playlist
+     *
+     * @param song the song to add
+     * @throws SongAlreadyExistsException if the song already exists in the playlist
      */
-
     public void addSong(Song song) throws SongAlreadyExistsException {
         if (playlist.contains(song))
             throw new SongAlreadyExistsException("This song is already in the playlist");
@@ -91,34 +41,26 @@ public class Playlist implements Cloneable, Iterable<Song>, FilteredSongIterable
     /**
      * Removes a song from the playlist.
      *
-     * @param song the song to be removed
-     * @return true if the song was found and removed, false otherwise
+     * @param song the song to remove
+     * @return true if the song was removed, false otherwise
      */
-
     public boolean removeSong(Song song) {
         return playlist.remove(song);
     }
 
-
     /**
-     * super.clone() - create a shallow copy of the Playlist object. This means that the
-     * object itself is copied, but the objects referenced by the playlist field are not cloned.
-     * The copyPlaylist.playlist line creates a new ArrayList object for the copyPlaylist object to store its songs
-     * meaning allocation new space in the memory. The for loop iterates over each Song object in the original
-     * playlist and for each song, it calls the clone() method on it to create a deep copy of the Song object.
-     * The cloned Song objects are then added to the copyPlaylist.playlist list.
-     * if the object is not clonable than it will not throw a new message but it w`ont work.
+     * Creates a shallow clone of the playlist.
      *
-     * @return the coppy of the playlist of cloneable.
+     * @return a cloned playlist object
      */
     @Override
     public Playlist clone() {
         try {
             Playlist copyPlaylist = (Playlist) super.clone();
-            copyPlaylist.playlist = new ArrayList<>();
-            for (Song song : this.playlist)
-                copyPlaylist.playlist.add(song.clone());
-
+            copyPlaylist.playlist = (ArrayList<Song>) playlist.clone();
+            for (int i = 0; i < playlist.size(); i++) {
+                copyPlaylist.playlist.set(i, playlist.get(i).clone());
+            }
             return copyPlaylist;
         } catch (CloneNotSupportedException e) {
             return null;
@@ -126,11 +68,10 @@ public class Playlist implements Cloneable, Iterable<Song>, FilteredSongIterable
     }
 
     /**
-     * Checks if the Playlist object is equal to another object. Two playlists are considered equal
-     * if they contain the same songs in any order.
+     * Checks if the playlist is equal to another object.
      *
-     * @param other the object to compare with
-     * @return true if the objects are equal, false otherwise
+     * @param other the object to compare
+     * @return true if the playlist is equal to the other object, false otherwise
      */
     @Override
     public boolean equals(Object other) {
@@ -145,9 +86,9 @@ public class Playlist implements Cloneable, Iterable<Song>, FilteredSongIterable
     }
 
     /**
-     * creating a haseCode value for each playlist, using the hash code of each song in the playlist and
+     * Computes the hash code for the playlist.
      *
-     * @return an int value representing the hash Value.
+     * @return the hash code value for the playlist
      */
     @Override
     public int hashCode() {
@@ -159,9 +100,9 @@ public class Playlist implements Cloneable, Iterable<Song>, FilteredSongIterable
     }
 
     /**
-     * Returns a string representation of the Playlist object.
+     * Returns a string representation of the playlist.
      *
-     * @return a string representation of the Playlist
+     * @return a string representation of the playlist
      */
     @Override
     public String toString() {
@@ -176,243 +117,117 @@ public class Playlist implements Cloneable, Iterable<Song>, FilteredSongIterable
     }
 
     /**
-     * Filters the playlist by removing songs that do not match the specified artist.
-     * By iterating over the list using the iterator, we remove from the filtered playlist the songs that
-     * doesn't match the filter.
+     * Applies the set filters to the playlist and returns the filtered songs.
+     *
+     * @return the filtered songs based on the applied filters
+     */
+    private ArrayList<Song> applyFilter() {
+        ArrayList<Song> filteredSongs = new ArrayList<>();
+        for (Song song : playlist) {
+            if (filterArtist == null || filterArtist.equals(song.getArtist())) {
+                if (filterGenre == null || filterGenre.equals(song.getGenre())) {
+                    if (song.getDuration() <= filterDuration) {
+                        filteredSongs.add(song);
+                    }
+                }
+            }
+        }
+        return filteredSongs;
+    }
+
+    /**
+     * Filters the playlist by artist name.
+     *
      * @param artist the artist name to filter by
      */
+    @Override
     public void filterArtist(String artist) {
-        if (artist != null) {
-            Iterator<Song> iterator = filterPlaylist.iterator();
-            while (iterator.hasNext()) {
-                Song song = iterator.next();
-                if (!song.getArtist().equals(artist)) {
-                    iterator.remove();
-                }
-            }
-        }
+        filterArtist = artist;
     }
 
     /**
-     * fillters the list using the iterator. if there is a next song we will check if the song matches
-     * the filters demand - if not, we will remove the song from the filtered list.
-     * @param maxSeconds - max seconds of the song.
-     */
-    public void filterDuration(int maxSeconds) {
-        Iterator<Song> iterator = filterPlaylist.iterator();
-        while (iterator.hasNext()) {
-            Song song = iterator.next();
-            if (song.getDuration() > maxSeconds) {
-                iterator.remove();
-            }
-        }
-    }
-
-    /**
-     * Filters the playlist by removing songs that do not match the specified genre.
-     * The filter works using the iterator. while there is a next song we will check if the song
-     * answers to the demands of the filter.
-     * @param genre the genre to filter the playlist by
-     */
-
-    public void filterGenre(Song.Genre genre) {
-        if (genre != null) {
-            Iterator<Song> iterator = filterPlaylist.iterator();
-            while (iterator.hasNext()) {
-                Song song = iterator.next();
-                if (song.getGenre() != genre) {
-                    iterator.remove();
-                }
-            }
-        }
-    }
-
-
-    /**
-     * Sets the scanning order for the playlist based on the specified  ScanningOrder from the ENUM.
-     * The scanning order determines how the songs in the playlist are sorted for iteration.
-     * @param scanningOrder the scanning order to apply to the playlist
+     * Filters the playlist by song genre.
+     *
+     * @param genre the genre to filter by
      */
     @Override
-    public void setScanningOrder(ScanningOrder scanningOrder) {
-        if (filterPlaylist.size() > 0) {
-            if (scanningOrder == ScanningOrder.ADDING) {
-                return;
-            }
-
-            if (scanningOrder == ScanningOrder.NAME) {
-                filterPlaylist.sort(Comparator.comparing(Song::getName)
-                        .thenComparing(Song::getArtist));
-
-            }
-
-            if (scanningOrder == ScanningOrder.DURATION) {
-                filterPlaylist.sort(Comparator.comparingInt(Song::getDuration)
-                        .thenComparing(Song::getName)
-                        .thenComparing(Song::getArtist));
-            }
-        }
+    public void filterGenre(Song.Genre genre) {
+        filterGenre = genre;
     }
 
-}
+    /**
+     * Filters the playlist by maximum song duration.
+     *
+     * @param duration the maximum duration to filter by
+     */
+    @Override
+    public void filterDuration(int duration) {
+        filterDuration = duration;
+    }
 
-
-
-
-
-    /*
+    /**
+     * Sets the scanning order for iterating over the playlist.
+     *
+     * @param order the scanning order to set
+     */
+    @Override
     public void setScanningOrder(ScanningOrder order) {
         scanningOrder = order;
     }
 
+    /**
+     * Returns an iterator over the playlist.
+     *
+     * @return an iterator over the playlist
+     */
     @Override
     public Iterator<Song> iterator() {
         return new PlaylistIterator();
     }
 
-    private void updateIterator() {
-        ArrayList<Song> sortedSongs = new ArrayList<>(playlist);
-        switch (scanningOrder) {
-            case ADDING:
-                iterator = sortedSongs.iterator();
-                break;
-            case NAME:
-                sortedSongs.sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
-                iterator = sortedSongs.iterator();
-                break;
-            case DURATION:
-                sortedSongs.sort(Comparator.comparing(Song::getDuration).thenComparing(Song::getName).thenComparing(Song::getArtist));
-                iterator = sortedSongs.iterator();
-                break;
-        }
-    }
-
-    private class PlaylistIterator implements Iterator<Song> {
-        private Iterator<Song> iterator;
-
-        public PlaylistIterator() {
-            updateIterator();
-        }
-
-        @Override
-        public boolean hasNext() {
-            return iterator.hasNext();
-        }
-
-        @Override
-        public Song next() {
-            if (!hasNext())
-                throw new NoSuchElementException("No more songs in the playlist");
-            return iterator.next();
-        }
-    }
-}
-
-
-        /**
-         * Returns an iterator over the songs in the playlist.
-         * @return an iterator over the songs in the playlist
-         */
-
-
-
-/*
+    /**
+     * Iterator class for iterating over the playlist.
+     */
     public class PlaylistIterator implements Iterator<Song> {
-        private Iterator<Song> iterator;
+        private ArrayList<Song> sortedSongs;
+        private int index;
 
         /**
          * Constructs a new PlaylistIterator.
+         * Applies the filters and sorting order to the playlist.
          */
-/*
         public PlaylistIterator() {
-            ArrayList<Song> sortedSongs = new ArrayList<>(playlist);
+            sortedSongs = applyFilter();
             switch (scanningOrder) {
                 case ADDING:
-                    iterator = sortedSongs.iterator();
                     break;
                 case NAME:
                     sortedSongs.sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
-                    iterator = sortedSongs.iterator();
                     break;
                 case DURATION:
                     sortedSongs.sort(Comparator.comparing(Song::getDuration).thenComparing(Song::getName).thenComparing(Song::getArtist));
-                    iterator = sortedSongs.iterator();
                     break;
             }
         }
 
         /**
-         * @return {@code true} if there are more songs in the playlist, {@code false} otherwise
+         * Checks if there are more songs to iterate over.
+         *
+         * @return true if there are more songs, false otherwise
          */
-/*
         @Override
         public boolean hasNext() {
-            return iterator.hasNext();
+            return index < sortedSongs.size();
         }
 
         /**
-         * Returns the next song in the playlist.
-         * @return the next song in the playlist
-         * @throws NoSuchElementException if there are no more songs in the playlist
+         * Returns the next song in the iteration.
+         *
+         * @return the next song
          */
-/*
         @Override
         public Song next() {
-            if (!hasNext()) {
-                throw new NoSuchElementException("No more songs in the playlist");
-            }
-            return iterator.next();
+            return sortedSongs.get(index++);
         }
     }
-
-
- */
-        /*
-        private class PlaylistIterator implements Iterator<Song> {
-            private Iterator<Song> iterator;
-
-            public PlaylistIterator() {
-                ArrayList<Song> sortedSongs = new ArrayList<>(playlist);
-                switch (scanningOrder) {
-                    case ADDING:
-                        iterator = sortedSongs.iterator();
-                        break;
-                    case NAME:
-                        sortedSongs.sort(Comparator.comparing(Song::getName).thenComparing(Song::getArtist));
-                        iterator = sortedSongs.iterator();
-                        break;
-                    case DURATION:
-                        sortedSongs.sort(Comparator.comparing(Song::getDuration).thenComparing(Song::getName).thenComparing(Song::getArtist));
-                        iterator = sortedSongs.iterator();
-                        break;
-                }
-            }
-
-            @Override
-            public boolean hasNext() {
-                return iterator.hasNext();
-            }
-
-            @Override
-            public Song next() {
-                if (!hasNext()) {
-                    throw new NoSuchElementException("No more songs in the playlist");
-                }
-                return iterator.next();
-            }
-        }
-
 }
-
-
-
-
-
-
-         */
-
-
-
-
-
-

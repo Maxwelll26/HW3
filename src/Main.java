@@ -36,14 +36,14 @@ class MyCloneable implements Cloneable {
 
 public class Main {
     public static void main(String[] args) {
-        //testPartA();
+        testPartA();
         testPartB();
     }
 
     /**
      * Tests for part A.
      */
-    /*
+
     private static void testPartA() {
         try {
             new ArrayStack<>(-25);
@@ -131,12 +131,12 @@ public class Main {
     }
 
 
-     */
+
 
     /**
      * Iterates over a given stack.
      */
-    /*
+
     private static void iterateStack(Stack<?> stack, String name) {
         System.out.println(name + " size: " + stack.size());
         System.out.println("Is empty? " + stack.isEmpty());
@@ -150,7 +150,7 @@ public class Main {
     }
 
 
-     */
+
     /**
      * Tests for part B.
      */

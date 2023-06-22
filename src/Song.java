@@ -1,69 +1,76 @@
 /**
- * Represents a song with its attributes such as name, artist, genre, and duration.
+ * Represents a song with its associated properties.
  */
-public class Song implements Cloneable{
-
+public class Song implements Cloneable {
     private final String name;
     private final String artist;
     private Genre genre;
     private int duration;
-    private Object [] song;
 
     /**
-     * Constructs a Song object with the specified attributes.
+     * Constructs a new Song object with the specified name, artist, genre, and duration.
+     *
      * @param name     the name of the song
      * @param artist   the artist of the song
-     * @param genre    the genre of the song - using the ENUM.
+     * @param genre    the genre of the song
      * @param duration the duration of the song in seconds
      */
-    public Song(String name,String artist, Genre genre, int duration) {
-        this.name=name;
+    public Song(String name, String artist, Genre genre, int duration) {
+        this.name = name;
         this.artist = artist;
         this.genre = genre;
         this.duration = duration;
-
-        int mm = duration/60;
-        int ss = duration%60;
-
-        String formattedDuration = String.format("%d:%02d", mm, ss);
-        song = new Object[] {name,artist, genre, formattedDuration};
     }
 
     /**
-     * Getters for every feature in the song.
-     * @return Exactly the requested value
+     * Retrieves the name of the song.
+     *
+     * @return the name of the song
      */
     public String getName() {
         return name;
     }
 
+    /**
+     * Retrieves the artist of the song.
+     *
+     * @return the artist of the song
+     */
     public String getArtist() {
         return artist;
     }
 
+    /**
+     * Retrieves the genre of the song.
+     *
+     * @return the genre of the song
+     */
     public Genre getGenre() {
         return genre;
     }
 
+    /**
+     * Retrieves the duration of the song in seconds.
+     *
+     * @return the duration of the song in seconds
+     */
     public int getDuration() {
         return duration;
     }
 
-    public Object[] getSong() {
-        return song;
-    }
-
     /**
-     * setts the duration of the song in seconds.
-     * @param duration the new applicable duration for the song.
+     * Sets the duration of the song in seconds.
+     *
+     * @param duration the duration of the song in seconds
      */
     public void setDuration(int duration) {
         this.duration = duration;
     }
 
     /**
-     * new way to write the string appropriately according to the instructions.
-     * @return a formatted string.
+     * Returns a string representation of the song.
+     *
+     * @return a string representation of the song
      */
     @Override
     public String toString() {
@@ -72,29 +79,22 @@ public class Song implements Cloneable{
     }
 
     /**
-     * Creates and returns a copy of this Song object with all his features. the name and artist are STR
-     * and are immutable and also regarding genre from the enum - is those cases, so shallow coping is
-     * deep coping for us - super.clone handles it.
-     * regarding for duration - int is a primitive type, it is copied by value so in this case in order to do
-     * deep copy we need to create new duration.
+     * Creates and returns a copy of this Song object.
+     *
      * @return a clone of this Song object
      */
     @Override
     public Song clone() {
         try {
-            Song copySong = (Song) super.clone();
-            copySong.duration = duration;
-            return copySong;
-
+            return (Song) super.clone();
         } catch (CloneNotSupportedException e) {
             return null;
         }
     }
 
     /**
-     * internal enum for the Genre.
+     * Represents the genre of a song.
      */
-
     public enum Genre {
         POP,
         ROCK,
@@ -102,30 +102,28 @@ public class Song implements Cloneable{
         COUNTRY,
         JAZZ,
         DISCO
-
     }
 
-
     /**
-     * overriding on equals. If the other object is null or the hashcode between the two objects are different
-     * or the other object is not instance of Song - the two objects are not equal so returns false.
-     * defining that otherSong from Song type is the other object.
-     * @param other who is the other object we are trying to say if this song is equals to.
-     * @return true or false. if the song name and the artist are the same, so we will get true. else - false.
+     * Checks if this Song object is equal to another object.
+     *
+     * @param other the object to compare
+     * @return true if the objects are equal, false otherwise
      */
     @Override
     public boolean equals(Object other) {
         if (this == other)
             return true;
-        if (other == null || getClass() != other.getClass() || this.hashCode() != other.hashCode())
+        if (other == null || getClass() != other.getClass())
             return false;
         Song otherSong = (Song) other;
         return name.equals(otherSong.name) && artist.equals(otherSong.artist);
     }
 
     /**
-     * calculating a hashcode for each song using the hashcode for the name of the song and the artist.
-     * @return the int value of the Hashcode.
+     * Returns the hash code value for this Song object.
+     *
+     * @return the hash code value for this Song object
      */
     @Override
     public int hashCode() {
@@ -133,5 +131,4 @@ public class Song implements Cloneable{
         result = 31 * result + artist.hashCode();
         return result;
     }
-
 }

@@ -1,13 +1,14 @@
 /**
  * Exception thrown when a song already exists. New exception for playlist class.
  */
-
-public class SongAlreadyExistsException extends RuntimeException{
+public class SongAlreadyExistsException extends RuntimeException {
 
     /**
      * Constructs a new SongAlreadyExistsException with no detail message.
      */
-    public SongAlreadyExistsException() {}
+    public SongAlreadyExistsException() {
+        super();
+    }
 
     /**
      * Constructs a new SongAlreadyExistsException with the specified detail message.
@@ -25,5 +26,4 @@ public class SongAlreadyExistsException extends RuntimeException{
     public SongAlreadyExistsException (String string, Throwable cause){
         super(string, cause);
     }
-
 }

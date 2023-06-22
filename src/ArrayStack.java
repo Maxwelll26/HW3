@@ -119,7 +119,7 @@ public class ArrayStack<E extends Cloneable> implements Stack<E> {
     /**
      * An iterator implementation for iterating over the elements in the stack.
      */
-    private class StackIterator implements Iterator<E> {
+    public class StackIterator implements Iterator<E> {
         private int currIndex = top;
 
         @Override
